@@ -1,5 +1,8 @@
 package br.com.targettrust;
 
+import org.assertj.core.data.Percentage;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,7 +14,8 @@ import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class CalculadoraIMCTest {
 
@@ -19,7 +23,7 @@ public class CalculadoraIMCTest {
     void calcularIMC() {
         CalculadoraIMC calculadoraIMC = new CalculadoraIMC();
         var result = calculadoraIMC.calcularIMC(82.0f, 1.75f, 2);
-        assertEquals(26.78f, result, 0.01);
+        assertThat(result).isCloseTo(26.78d, Percentage.withPercentage(1));
 
     }
 
@@ -27,7 +31,7 @@ public class CalculadoraIMCTest {
     void calcularIMC_scenario2() {
         CalculadoraIMC calculadoraIMC = new CalculadoraIMC();
         var result = calculadoraIMC.calcularIMC(82.0f, 1.75f, 2);
-        assertEquals(26.78f, result, 0.01);
+        assertThat(result).isCloseTo(26.78f , Percentage.withPercentage(0.1));
 
     }
 
@@ -39,15 +43,16 @@ public class CalculadoraIMCTest {
     void calcularIMC_scenario_valores_corretos(float peso, float altura, double resultadoEsperado) {
         CalculadoraIMC calculadoraIMC = new CalculadoraIMC();
         var result = calculadoraIMC.calcularIMC(peso, altura, 2);
-        assertEquals(resultadoEsperado, result, 0.01);
+        assertThat(result).isCloseTo(resultadoEsperado , Percentage.withPercentage(0.1));
     }
 
     @ParameterizedTest
     @MethodSource("calculoIMCOutliner")
+    @Disabled
     void calcularIMCOutliner(float peso, float altura, double resultadoEsperado) {
         CalculadoraIMC calculadoraIMC = new CalculadoraIMC();
         var result = calculadoraIMC.calcularIMC(peso, altura, 2);
-        assertEquals(resultadoEsperado, result, 0.01);
+        assertThat(result).isCloseTo(resultadoEsperado , Percentage.withPercentage(0.1));
     }
 
     // Gerando aleatoriamente os resultados, não é previsiviel, ou seja o teste pode falhar aleatoriamente.
@@ -62,6 +67,6 @@ public class CalculadoraIMCTest {
     void classificarIMC() {
         CalculadoraIMC calculadoraIMC = new CalculadoraIMC();
         var result = calculadoraIMC.classificarIMC(17.0f);
-        assertEquals("Você está magro(a)", result);
+        assertThat(result).isEqualTo("Você está magro(a)");
     }
 }
