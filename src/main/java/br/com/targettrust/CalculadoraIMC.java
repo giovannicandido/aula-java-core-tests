@@ -1,14 +1,31 @@
 package br.com.targettrust;
 
+import br.com.targettrust.model.ParametroIMCIncorretoException;
+
 import java.math.BigDecimal;
 
 public class CalculadoraIMC {
 
-    public double calcularIMC(float peso, float altura, int numeroCasas) {
+    public BigDecimal calcularIMC(BigDecimal peso, BigDecimal altura, int numeroCasas) {
 //        float imc = peso / (altura * altura);
-        float imc = (float) (peso / Math.pow(altura, 2));
-        BigDecimal bigDecimal = new BigDecimal(imc);
-        imc = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+        if(altura.equals(BigDecimal.ZERO)) {
+            throw new ParametroIMCIncorretoException();
+        }
+
+        if(altura.compareTo(new BigDecimal("3.5")) >= 0) {
+            return BigDecimal.ZERO;
+        }
+
+        if(peso.compareTo(new BigDecimal("1000")) >= 0) {
+            return BigDecimal.ZERO;
+        }
+
+        if(peso.compareTo(new BigDecimal("15")) <= 0) {
+            return BigDecimal.ZERO;
+        }
+
+        BigDecimal imc = peso.divide(altura.pow(2), numeroCasas, BigDecimal.ROUND_HALF_UP);
+        imc = imc.setScale(numeroCasas, BigDecimal.ROUND_HALF_UP);
         return imc;
     }
 
