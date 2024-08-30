@@ -1,5 +1,6 @@
 package br.com.targettrust;
 
+import br.com.targettrust.model.ClassificacaoIMC;
 import br.com.targettrust.model.ParametroIMCIncorretoException;
 
 import java.math.BigDecimal;
@@ -29,19 +30,21 @@ public class CalculadoraIMC {
         return imc;
     }
 
-    public String classificarIMC(double imc) {
+    public ClassificacaoIMC classificarIMC(double imc) {
         System.out.printf("IMC: %s \n", imc);
         if (imc < 18.5) {
-            return "Você está magro(a)";
+            return ClassificacaoIMC.BAIXO_PESO;
         } else if (imc >= 18.5 && imc < 25) {
-            return "Seu peso está normal";
+            return ClassificacaoIMC.NORMAL;
         } else if (imc >= 25 && imc < 30) {
-            return "Você está com sobrepeso";
-        } else if (imc >= 30 && imc < 39) {
-            return "Você está acima do peso";
+            return ClassificacaoIMC.SOBREPESO;
+        } else if (imc >= 30 && imc < 35) {
+            return ClassificacaoIMC.OBESIDADE_I;
+        } else if (imc >= 35 && imc < 40) {
+            return ClassificacaoIMC.OBESIDADE_II;
         } else if (imc >= 40) {
-            return "Você está com obsidade grave, por favor se cuide";
+            return ClassificacaoIMC.OBESIDADE_EXTREMA;
         }
-        return "Sem classificação";
+        return ClassificacaoIMC.SEM_CLASSIFICACAO;
     }
 }

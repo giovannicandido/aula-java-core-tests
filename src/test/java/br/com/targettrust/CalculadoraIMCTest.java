@@ -1,5 +1,6 @@
 package br.com.targettrust;
 
+import br.com.targettrust.model.ClassificacaoIMC;
 import br.com.targettrust.model.ParametroIMCIncorretoException;
 import org.assertj.core.data.Offset;
 import org.assertj.core.data.Percentage;
@@ -98,6 +99,20 @@ public class CalculadoraIMCTest {
     void classificarIMC() {
         CalculadoraIMC calculadoraIMC = new CalculadoraIMC();
         var result = calculadoraIMC.classificarIMC(17.0f);
-        assertThat(result).isEqualTo("Você está magro(a)");
+        assertThat(result).isEqualTo(ClassificacaoIMC.BAIXO_PESO);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/imc.CSV", numLinesToSkip = 1)
+    void givenValidIMCParameters_whenClassificar_shouldReturnCorretValue(BigDecimal peso, BigDecimal altura,
+                                                                         BigDecimal resultadoEsperado,
+                                                                         String classificacaoEsperada) {
+        CalculadoraIMC calculadoraIMC = new CalculadoraIMC();
+
+        ClassificacaoIMC classificacaoIMC = ClassificacaoIMC.valueOf(classificacaoEsperada);
+
+        var imc = calculadoraIMC.calcularIMC(peso, altura, 2);
+        var result = calculadoraIMC.classificarIMC(imc.floatValue());
+        assertThat(result).isEqualTo(classificacaoIMC);
     }
 }

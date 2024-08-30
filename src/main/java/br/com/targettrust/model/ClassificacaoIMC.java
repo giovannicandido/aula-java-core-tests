@@ -6,5 +6,6 @@ public enum ClassificacaoIMC {
     SOBREPESO,
     OBESIDADE_I,
     OBESIDADE_II,
-    OBESIDADE_EXTREMA;
+    OBESIDADE_EXTREMA,
+    SEM_CLASSIFICACAO;
 }
