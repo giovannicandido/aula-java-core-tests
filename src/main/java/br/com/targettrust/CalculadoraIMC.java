@@ -2,8 +2,10 @@ package br.com.targettrust;
 
 import br.com.targettrust.model.ClassificacaoIMC;
 import br.com.targettrust.model.ParametroIMCIncorretoException;
+import br.com.targettrust.model.RangeClassificacao;
 
 import java.math.BigDecimal;
+import java.util.*;
 
 public class CalculadoraIMC {
 
@@ -32,6 +34,7 @@ public class CalculadoraIMC {
 
     public ClassificacaoIMC classificarIMC(double imc) {
         System.out.printf("IMC: %s \n", imc);
+
         if (imc < 18.5) {
             return ClassificacaoIMC.BAIXO_PESO;
         } else if (imc >= 18.5 && imc < 25) {
@@ -46,5 +49,30 @@ public class CalculadoraIMC {
             return ClassificacaoIMC.OBESIDADE_EXTREMA;
         }
         return ClassificacaoIMC.SEM_CLASSIFICACAO;
+    }
+
+    public void exemploIdeiaRemoverIf() {
+        Map<RangeClassificacao, ClassificacaoIMC> classificacoes = new HashMap<>();
+        var classificacao = classificacoes.get(17.0);
+    }
+
+    public void exemploListMapSet() {
+        // Tabela com chave e valor
+        // importante a chave não colidir
+        Map<String, String> exemploMap = new HashMap<>();
+        // sempre rapido
+        exemploMap.get("a");
+        // sempre rapido
+        exemploMap.put("a", "b");
+        exemploMap.put("a", "c");
+
+        // Uma lista de strings infinita
+        List<String> lista = new LinkedList<>();
+        // bem lento
+        lista.get(100000000);
+        // Pode ser rapido, ou nem tanto
+        lista.add("novo item");
+        // Uma lista que não se repete. Ou uma lista que remove duplicados.
+        Set<String> set = new HashSet<>();
     }
 }
