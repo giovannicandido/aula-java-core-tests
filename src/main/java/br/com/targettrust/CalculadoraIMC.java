@@ -53,7 +53,9 @@ public class CalculadoraIMC {
         // Optional nunca deve ser null
         // O programador opera na caixa, como se tivesse operando no objeto
         // No final pode-se retirar o não o objeto da caixa
-        Optional<RangeClassificacao> optionalRange =  classificacoes.stream().filter(range -> range.equals(imc)).findFirst();
+        Optional<RangeClassificacao> optionalRange =  classificacoes.stream()
+                .filter(range -> range.equals(imc))
+                .findFirst();
 
         // Exemplos de operações com o optional
 
